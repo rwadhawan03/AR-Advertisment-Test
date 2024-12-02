@@ -47,4 +47,36 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
       }, 'image/png');
     }
   });
+
+  // Function to display live GPS coordinates
+  const displayCoordinates = () => {
+    const coordsDiv = document.createElement('div');
+    coordsDiv.style.position = 'absolute';
+    coordsDiv.style.top = '10px';
+    coordsDiv.style.right = '10px';
+    coordsDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    coordsDiv.style.color = 'white';
+    coordsDiv.style.padding = '10px';
+    coordsDiv.style.borderRadius = '8px';
+    document.body.appendChild(coordsDiv);
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          coordsDiv.innerText = `Latitude: ${latitude.toFixed(6)}\nLongitude: ${longitude.toFixed(6)}`;
+        },
+        (error) => {
+          console.error('Error fetching location:', error);
+          coordsDiv.innerText = 'Unable to fetch location';
+        },
+        { enableHighAccuracy: true }
+      );
+    } else {
+      coordsDiv.innerText = 'Geolocation not supported by this browser';
+    }
+  };
+
+  // Display live coordinates
+  displayCoordinates();
 })();
