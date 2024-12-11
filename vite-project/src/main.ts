@@ -22,9 +22,7 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
   await session.applyLens(lens);
 
   // Add button to capture photo
-  const captureButton = document.createElement('button');
-  captureButton.innerText = 'Capture Photo';
-  document.body.appendChild(captureButton);
+  let captureButton = document.getElementById('capture-button') as HTMLButtonElement;
 
   captureButton.addEventListener('click', () => {
     const canvas = document.createElement('canvas');
