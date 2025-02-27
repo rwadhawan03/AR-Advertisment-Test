@@ -107,28 +107,38 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
   const displayCoordinates = () => {
     const coordsDiv = document.createElement('div');
     coordsDiv.style.position = 'absolute';
-    coordsDiv.style.top = '10px';
+    coordsDiv.style.bottom = '10px';
     coordsDiv.style.right = '10px';
-    coordsDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    coordsDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
     coordsDiv.style.color = 'white';
-    coordsDiv.style.padding = '10px';
+    coordsDiv.style.padding = '12px';
     coordsDiv.style.borderRadius = '8px';
+    coordsDiv.style.fontSize = '14px';
+    coordsDiv.style.fontFamily = 'Arial, sans-serif';
+    coordsDiv.innerText = 'Fetching location...';
     document.body.appendChild(coordsDiv);
 
     if ('geolocation' in navigator) {
       navigator.geolocation.watchPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          coordsDiv.innerText = `Latitude: ${latitude.toFixed(6)}\nLongitude: ${longitude.toFixed(6)}`;
+          const timestamp = new Date(position.timestamp).toLocaleTimeString();
+
+          coordsDiv.innerHTML = `
+            <strong>Live Location:</strong><br>
+            Latitude: ${latitude.toFixed(6)}<br>
+            Longitude: ${longitude.toFixed(6)}<br>
+            <small>Updated: ${timestamp}</small>
+          `;
         },
         (error) => {
           console.error('Error fetching location:', error);
-          coordsDiv.innerText = 'Unable to fetch location';
+          coordsDiv.innerHTML = `<strong>Error:</strong> Unable to fetch location. Please enable GPS.`;
         },
-        { enableHighAccuracy: true }
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
       );
     } else {
-      coordsDiv.innerText = 'Geolocation not supported by this browser';
+      coordsDiv.innerHTML = '<strong>Error:</strong> Geolocation not supported by this browser.';
     }
   };
 
