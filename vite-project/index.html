@@ -3,10 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css">
     <title>My Camera Kit Web App</title>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <div id="camera-container">
+      <canvas id="canvas"></canvas>
+      <button id="capture-button"></button>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

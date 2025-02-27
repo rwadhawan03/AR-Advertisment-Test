@@ -38,64 +38,8 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
 
   await session.applyLens(lens);
 
-  // Zoom Controls UI
-  const zoomControls = document.createElement('div');
-  zoomControls.style.position = 'absolute';
-  zoomControls.style.bottom = '10px';
-  zoomControls.style.left = '50%';
-  zoomControls.style.transform = 'translateX(-50%)';
-  zoomControls.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-  zoomControls.style.padding = '10px';
-  zoomControls.style.borderRadius = '8px';
-  zoomControls.style.display = 'flex';
-  zoomControls.style.alignItems = 'center';
-  zoomControls.style.gap = '10px';
-  document.body.appendChild(zoomControls);
-
-  // Zoom Slider
-  const zoomSlider = document.createElement('input');
-  zoomSlider.type = 'range';
-  zoomSlider.min = '1';
-  zoomSlider.max = '3'; // Max zoom level
-  zoomSlider.step = '0.1';
-  zoomSlider.value = '1';
-  zoomControls.appendChild(zoomSlider);
-
-  // Reset Zoom Button
-  const resetZoomButton = document.createElement('button');
-  resetZoomButton.innerText = 'Reset Zoom';
-  resetZoomButton.style.padding = '5px 10px';
-  resetZoomButton.style.border = 'none';
-  resetZoomButton.style.backgroundColor = '#fff';
-  resetZoomButton.style.color = '#000';
-  resetZoomButton.style.cursor = 'pointer';
-  resetZoomButton.style.borderRadius = '5px';
-  zoomControls.appendChild(resetZoomButton);
-
-  // Handle Zoom Change
-  zoomSlider.addEventListener('input', () => {
-    const zoomLevel = parseFloat(zoomSlider.value);
-    liveRenderTarget.style.transform = `scale(${zoomLevel})`;
-  });
-
-  // Reset Zoom
-  resetZoomButton.addEventListener('click', () => {
-    zoomSlider.value = '1';
-    liveRenderTarget.style.transform = 'scale(1)';
-  });
-
-  // Capture Photo Button
-  const captureButton = document.createElement('button');
-  captureButton.innerText = 'Capture Photo';
-  captureButton.style.position = 'absolute';
-  captureButton.style.top = '10px';
-  captureButton.style.left = '10px';
-  captureButton.style.backgroundColor = '#fff';
-  captureButton.style.padding = '8px 12px';
-  captureButton.style.border = 'none';
-  captureButton.style.borderRadius = '5px';
-  captureButton.style.cursor = 'pointer';
-  document.body.appendChild(captureButton);
+  // Add button to capture photo
+  let captureButton = document.getElementById('capture-button') as HTMLButtonElement;
 
   captureButton.addEventListener('click', () => {
     const canvas = document.createElement('canvas');
